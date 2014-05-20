@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-lg-6">
+    <%= form_for(@user, :html => { :class => 'form-horizontal' }) do |f| %>
+        <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+              <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+        <div class="form-group">
+          <%= f.label :name, :class => 'control-label col-lg-6' %>
+          <div class="col-lg-6">
+            <%= f.text_field :name, :class => 'form-control', :required => true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :email, :class => 'control-label col-lg-6' %>
+          <div class="col-lg-6">
+            <%= f.email_field :email, :class => 'form-control', :required => true, :disabled => true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label '500px Username', :class => 'control-label col-lg-6' %>
+          <div class="col-lg-6">
+            <%= f.text_field :username, :class => 'form-control', :required => true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label '500px Password', :class => 'control-label col-lg-6' %>
+          <div class="col-lg-6">
+            <%= f.password_field :password_500px, :class => 'form-control', :required => true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :profile_pic, :class => 'control-label col-lg-6' %>
+          <div class="col-lg-6">
+            <%= f.text_field :profile_pic, :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-lg-6 col-lg-offset-6">
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Update Details</button>
+          </div>
+        </div>
+    <% end %>
+  </div>
+  <div class="col-lg-6 text-right">
+    <% if @user.access_secret.blank? || @user.access_token.blank? %>
+        <a href="<%= get_access_token_user_path @user %>" class="btn btn-success" id="">
+          <span class="glyphicon glyphicon-lock"></span> Login with 500px
+        </a>
+    <% else %>
+        <h5>Access Tokens acquired.</h5>
+        Access Code: <code><%= @user.access_token %></code> <br />
+        Secret Key: <code><%= @user.access_secret %></code> <br /><br />
+        <% if @user.authenticated? %>
+            <a href="<%= perform_action_user_path(@user) %>?user_action=active" class="btn btn-success" id="">
+              <span class="glyphicon glyphicon-check"></span> Start Bot
+            </a>
+        <% elsif @user.active? %>
+            <a href="<%= perform_action_user_path(@user) %>?user_action=authenticated" class="btn btn-danger" id="">
+              <span class="glyphicon glyphicon-time"></span> Stop Bot
+            </a>
+        <% end %>
+    <% end %>
+  </div>
+</div>
+

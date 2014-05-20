@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login &mdash; Commentify</title>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container">
+  <img src="/assets/commentify.png" class="brand-logo" >
+
+  <%= yield %>
+  
+  <hr>
+
+  <footer>
+    <p class="text-center">&copy; Commentify 2014 | All Rights Reserverd.</p>
+  </footer>
+</div> <!-- /container -->
+
+<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<h1>All 500px Users</h1>
+
+<table class="table table-bordered table-responsive table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>500px Username</th>
+      <th>Consumer Key</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.username %></td>
+        <td><%= user.consumer_key %></td>
+        <td>
+          <%#= link_to '<span class="glyphicon glyphicon-user"></span> Show'.html_safe, user, :class => 'btn btn-sm btn-success' %>
+          <%= link_to '<span class="glyphicon glyphicon-pencil"></span> Edit'.html_safe, edit_user_path(user), :class => 'btn btn-sm btn-info' %>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, user, method: :delete, data: { confirm: 'This will delete the user. Are you sure?' }, :class => 'btn btn-sm btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '<span class="glyphicon glyphicon-plus"></span> New User'.html_safe, new_user_path, :class => 'btn btn-primary' %>
