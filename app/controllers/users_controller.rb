@@ -4,7 +4,8 @@ class UsersController < ApplicationController
 	# GET /users
 	# GET /users.json
 	def index
-		@users = User.all
+		@users = [current_user]
+    redirect_to edit_user_path current_user
 	end
 
 	# GET /users/1
@@ -19,6 +20,8 @@ class UsersController < ApplicationController
 
 	# GET /users/1/edit
 	def edit
+    @user = User.find_by(:id => params[:id])
+    @activities = Activity.where(:user_id => @user.id).limit(50).all
 	end
 
 	# POST /users

@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :rememberable, :trackable, :validatable
 
   has_many :activities, :dependent => :destroy
 
@@ -51,6 +51,11 @@ class User < ActiveRecord::Base
   end
 
   def get_links
+    unless self.active?
+      puts 'User not active. Quit!'
+      return false
+    end
+
     access_token = authenticate_500px
     url = '/v1/photos?feature=fresh_today&rpp=50&sort=created_at&sort_direction=desc&include_states=voted&tags=1'
     request = access_token.get(url).body
@@ -85,7 +90,7 @@ class User < ActiveRecord::Base
       return false
     end
 
-    photo_exists = Activity.find_by(:photo_id => args[:photo_id].to_i)
+    photo_exists = Activity.where(:photo_id => args[:photo_id].to_i, :user_id => self.id).first
 
     if photo_exists
       puts 'Photo has already been liked and commented on. Quit!'

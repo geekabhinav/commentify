@@ -25,4 +25,8 @@ module ApplicationHelper
 		end.join.html_safe
 	end
 
+
+  def get_statement(activity)
+    "#{activity.user.username.to_s} #{activity.action_type == 'like' ? 'liked' : 'commented on'} Photo ID: <a href=\"http://500px.com/photo/#{activity.photo_id.to_s}\" class='link' target='_blank'>#{activity.photo_id.to_s}</a> | #{time_ago_in_words(activity.created_at)} ago."
+  end
 end
