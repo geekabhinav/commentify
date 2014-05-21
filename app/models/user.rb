@@ -108,9 +108,9 @@ class User < ActiveRecord::Base
     request = access_token.post(url, params).body
     request = JSON.parse(request)
 
-    if request[:status].to_i == 200
+    # if request[:status].to_i == 200
       Activity.add('like', args[:photo_id], self.id )
-    end
+    # end
 
     sleep(5)
 
@@ -121,9 +121,9 @@ class User < ActiveRecord::Base
     }
     request = access_token.post(url, params).body
     request = JSON.parse(request)
-    if request[:status].to_i == 200
+    # if request[:status].to_i == 200
       Activity.add('comment', args[:photo_id], self.id )
-    end
+    # end
 
     sleep(rand(30-60))
   end
